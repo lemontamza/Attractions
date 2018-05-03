@@ -64,21 +64,34 @@ $query = mysqli_query($conn,$sql);
       <th scope="col">สถานที่</th>
       <th scope="col">ข้อมูล</th>
       <th scope="col">รูปภาพ</th>
+			<th scope="col">หมวดหมู่</th>
       <th scope="col">Process</th>
     </tr>
   </thead>
   <tbody>
 <?php
 while ($obj=mysqli_fetch_array($query,MYSQLI_ASSOC)){
+switch ($obj['data_category']) {
+	case 'dhamm':
+		$datacat = "ธรรมะ";
+		break;
+	case 'nature':
+		$datacat = "ธรรมชาติ";
+		break;
+	case 'culture':
+		$datacat = "วัฒนธรรม";
+		break;
+}
 ?>
     <tr>
       <td><?php echo $obj['data_id']?></td>
       <td><?php echo $obj['data_name']?></td>
       <td><?php echo $obj['data_detail']?></td>
-      <td><?php echo $obj['data_pic']?></td>
+      <td><?php echo "<img src='../images/".$obj['data_pic']."' width='100px'>"?></td>
+			<td><?php echo $datacat?></td>
       <td>
 				<a href="edit.data.php?id=<?php echo $obj['data_id']?>" class="btn btn-warning" ><i class="far fa-edit"></i></a>
-				<a href="?id=<?php echo $obj['data_id']?>" class="btn btn-danger" onClick="javascript:return confirm('คุณต้องการลบ <?php echo $obj['data_name']?> ใช่หรือไม่');"><i class="far fa-trash-alt"></i></a>
+				<a href="delete.data.php?id=<?php echo $obj['data_id']?>" class="btn btn-danger" onClick="javascript:return confirm('คุณต้องการลบ <?php echo $obj['data_name']?> ใช่หรือไม่');"><i class="far fa-trash-alt"></i></a>
 			</td>
     </tr>
 <?php
@@ -120,7 +133,6 @@ while ($obj=mysqli_fetch_array($query,MYSQLI_ASSOC)){
     <label for="exampleInputEmail1">รูปภาพ</label>
     <input type="file" name="fileToUpload" class="form-control" accept="image/*">
   </div>
-
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
