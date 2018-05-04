@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 01, 2018 at 01:18 PM
+-- Generation Time: May 04, 2018 at 07:29 AM
 -- Server version: 10.1.31-MariaDB
 -- PHP Version: 7.2.4
 
@@ -61,8 +61,31 @@ CREATE TABLE `data` (
 --
 
 INSERT INTO `data` (`data_id`, `data_name`, `data_detail`, `data_pic`, `data_category`) VALUES
-(00001, 'Sakonnakhon', '1234123123123', 'img1.jpg', 'main'),
-(00002, 'fdgdf', 'ertetetert', NULL, NULL);
+(00002, 'à¸§à¸±à¸”à¸›à¹ˆà¸²à¸ªà¸¸à¸˜à¸²à¸§à¸²à¸ª ', 'à¸§à¸±à¸”à¸›à¹ˆà¸²à¸ªà¸¸à¸˜à¸²à¸§à¸²à¸ª 2313346466797661231', '1.PNG', 'dhamm'),
+(00003, 'à¸™à¹‰à¸³à¸•à¸à¸„à¸³à¸«à¸­à¸¡', 'à¸™à¹‰à¸³à¸•à¸à¸„à¸³à¸«à¸­à¸¡', '2.PNG', 'nature'),
+(00004, 'à¸Šà¸™à¹€à¸œà¹ˆà¸²à¸ à¸¹à¹„à¸—', 'à¸Šà¸™à¹€à¸œà¹ˆà¸²à¸ à¸¹à¹„à¸—', 'VIO-S218-Rear.jpg', 'culture'),
+(00005, 'à¸§à¸±à¸”à¸›à¹ˆà¸²à¸ªà¸±à¸™à¸•à¸´à¸˜à¸£à¸£à¸¡', 'à¸§à¸±à¸”à¸›à¹ˆà¸²à¸ªà¸±à¸™à¸•à¸´à¸˜à¸£à¸£à¸¡', '2.PNG', 'dhamm');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `slide`
+--
+
+CREATE TABLE `slide` (
+  `slide_id` int(3) UNSIGNED ZEROFILL NOT NULL,
+  `slide_pic` char(50) DEFAULT NULL,
+  `slide_active` char(10) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `slide`
+--
+
+INSERT INTO `slide` (`slide_id`, `slide_pic`, `slide_active`) VALUES
+(002, 'slide1.jpg', 'active'),
+(003, 'slide2.jpg', NULL),
+(004, 'slide3.jpg', NULL);
 
 --
 -- Indexes for dumped tables
@@ -81,6 +104,12 @@ ALTER TABLE `data`
   ADD PRIMARY KEY (`data_id`);
 
 --
+-- Indexes for table `slide`
+--
+ALTER TABLE `slide`
+  ADD PRIMARY KEY (`slide_id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -94,7 +123,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `data`
 --
 ALTER TABLE `data`
-  MODIFY `data_id` int(5) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `data_id` int(5) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `slide`
+--
+ALTER TABLE `slide`
+  MODIFY `slide_id` int(3) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
