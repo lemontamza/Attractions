@@ -6,7 +6,7 @@ if($_SESSION['UserID'] == "")
 		header("location:login.php");
 	}
 $conn = mysqli_connect($server,$username,$password,$dbname);
-$sql = "SELECT * FROM data ORDER BY data_id ASC";
+$sql = "SELECT * FROM slide ORDER BY slide_id ASC";
 $query = mysqli_query($conn,$sql);
 
 ?>
@@ -42,10 +42,10 @@ $query = mysqli_query($conn,$sql);
             <li class="nav-item ">
               <a class="nav-link" href="admin.php">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="datamanage.php">จัดการข้อมูล</a>
             </li>
-						<li class="nav-item">
+            <li class="nav-item active">
               <a class="nav-link" href="slidemanage.php">จัดการสไลด์</a>
             </li>
             <li class="nav-item">
@@ -58,43 +58,25 @@ $query = mysqli_query($conn,$sql);
 
     <!-- Begin page content -->
     <main role="main" class="container">
-      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">เพิ่มข้อมูล</button>
+      <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">เพิ่มสไลด์</button>
 </br></br>
       <table class="table">
   <thead class="thead-dark">
     <tr>
       <th scope="col">ID</th>
-      <th scope="col">สถานที่</th>
-      <th scope="col">ข้อมูล</th>
       <th scope="col">รูปภาพ</th>
-			<th scope="col">หมวดหมู่</th>
       <th scope="col">Process</th>
     </tr>
   </thead>
   <tbody>
 <?php
 while ($obj=mysqli_fetch_array($query,MYSQLI_ASSOC)){
-switch ($obj['data_category']) {
-	case 'dhamm':
-		$datacat = "ธรรมะ";
-		break;
-	case 'nature':
-		$datacat = "ธรรมชาติ";
-		break;
-	case 'culture':
-		$datacat = "วัฒนธรรม";
-		break;
-}
 ?>
     <tr>
-      <td><?php echo $obj['data_id']?></td>
-      <td><?php echo $obj['data_name']?></td>
-      <td><?php echo $obj['data_detail']?></td>
-      <td><?php echo "<img src='../images/".$obj['data_pic']."' width='100px'>"?></td>
-			<td><?php echo $datacat?></td>
+      <td><?php echo $obj['slide_id']?></td>
+      <td><?php echo "<img src='../slide/".$obj['slide_pic']."' width='200px'>"?></td>
       <td>
-				<a href="edit.data.php?id=<?php echo $obj['data_id']?>" class="btn btn-warning" ><i class="far fa-edit"></i></a>
-				<a href="delete.data.php?id=<?php echo $obj['data_id']?>" class="btn btn-danger" onClick="javascript:return confirm('คุณต้องการลบ <?php echo $obj['data_name']?> ใช่หรือไม่');"><i class="far fa-trash-alt"></i></a>
+				<a href="delete.slide.php?id=<?php echo $obj['slide_id']?>&p=<?php echo $obj['slide_pic']?>" class="btn btn-danger" onClick="javascript:return confirm('คุณต้องการลบ <?php echo $obj['data_name']?> ใช่หรือไม่');"><i class="far fa-trash-alt"></i></a>
 			</td>
     </tr>
 <?php
@@ -107,38 +89,21 @@ switch ($obj['data_category']) {
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">เพิ่มข้อมูล</h5>
+            <h5 class="modal-title" id="exampleModalLabel">เพิ่มสไลด์</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <form action="insert.data.php" method="post" enctype="multipart/form-data">
-  <div class="form-group">
-    <label for="exampleInputEmail1">ชื่อสถานที่</label>
-    <input type="text" class="form-control" name="dataname" placeholder="กรุณากรอกข้อมูล">
-  </div>
-  <div class="form-group">
-    <label for="exampleInputPassword1">ข้อมูล</label>
-    <textarea rows="4" cols="50" name="datadetail" class="form-control" ></textarea>
-  </div>
-	<div class="form-group">
-    <label for="exampleInputEmail1">หมวดหมู่</label>
-    <select class="form-control" name="datacategory">
-    	<option selected="selected">=== กรุณาเลือกหมวดหมู่ ==</option>
-			<option value="dhamm">ธรรมะ</option>
-			<option value="nature">ธรรมชาติ</option>
-			<option value="culture">วัฒนธรรม</option>
-    </select>
-  </div>
+            <form action="insert.slide.php" method="post" enctype="multipart/form-data">
   <div class="form-group">
     <label for="exampleInputEmail1">รูปภาพ</label>
     <input type="file" name="fileToUpload" class="form-control" accept="image/*">
   </div>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-danger" data-dismiss="modal">ยกเลิก</button>
-            <button type="submit" class="btn btn-primary">บันทึก</button>
+            <button type="button" class="btn btn-danger" data-dismiss="modal"><i class="fas fa-times"></i> ยกเลิก</button>
+            <button type="submit" class="btn btn-success"><i class="far fa-save"></i> บันทึก</button>
             </form>
           </div>
         </div>

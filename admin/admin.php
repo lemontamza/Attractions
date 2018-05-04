@@ -40,6 +40,9 @@ if($_SESSION['UserID'] == "")
             <li class="nav-item">
               <a class="nav-link" href="datamanage.php">จัดการข้อมูล</a>
             </li>
+						<li class="nav-item">
+              <a class="nav-link" href="slidemanage.php">จัดการสไลด์</a>
+            </li>
             <li class="nav-item">
               <a class="nav-link" href="logout.php">ออกจากระบบ</a>
             </li>
@@ -50,16 +53,8 @@ if($_SESSION['UserID'] == "")
 
     <!-- Begin page content -->
     <main role="main" class="container">
-      <h1 class="mt-5">Sticky footer with fixed navbar</h1>
-      <p class="lead">Pin a fixed-height footer to the bottom of the viewport in desktop browsers with this custom HTML and CSS. A fixed navbar has been added with <code>padding-top: 60px;</code> on the <code>body &gt; .container</code>.</p>
-      <p>Back to <a href="../sticky-footer">the default sticky footer</a> minus the navbar.</p>
+      <h1 class="mt-5">สวัสดี Admin !!</h1>
     </main>
-
-    <footer class="footer">
-      <div class="container">
-        <span class="text-muted">Place sticky footer content here.</span>
-      </div>
-    </footer>
 
     <!-- Bootstrap core JavaScript
     ================================================== -->

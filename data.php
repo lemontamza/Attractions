@@ -1,9 +1,26 @@
 <?php
 require('include/config.inc.php');
 $conn = mysqli_connect($server,$username,$password,$dbname);
-$sql = "SELECT * FROM data WHERE data_category = 'main'";
+$sql = "SELECT * FROM data WHERE data_category = '".$_GET['c']."'";
 $query = mysqli_query($conn,$sql);
-$result=mysqli_fetch_array($query,MYSQLI_ASSOC);
+if ($_GET['p'] == 'list') {
+  switch ($_GET['c']) {
+  	case 'dhamm':
+  		$objtitle = "ธรรมะ";
+  		break;
+  	case 'nature':
+  		$objtitle = "ธรรมชาติ";
+  		break;
+  	case 'culture':
+  		$objtitle = "วัฒนธรรม";
+  		break;
+  }
+}
+else {
+  $objt=mysqli_fetch_array($query,MYSQLI_ASSOC);
+  $objtitle = $objt['data_name'];
+
+}
 ?>
 <!doctype html>
 <html lang="en">
@@ -14,7 +31,7 @@ $result=mysqli_fetch_array($query,MYSQLI_ASSOC);
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Starter Template for Bootstrap</title>
+    <title><?php echo $objtitle;?></title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -34,33 +51,46 @@ $result=mysqli_fetch_array($query,MYSQLI_ASSOC);
 
       <div class="collapse navbar-collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
+          <li class="nav-item <?php if($_GET['c']==''){ echo "active'";}?>">
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">ธรรมมะ</a>
+          <li class="nav-item <?php if($_GET['c']=='dhamm'){ echo "active";}?>">
+            <a class="nav-link" href="data.php?c=dhamm&p=list">ธรรมมะ</a>
             </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">ธรรมชาติ</a>
+          <li class="nav-item <?php if($_GET['c']=='nature'){ echo "active";}?>">
+            <a class="nav-link" href="data.php?c=nature&p=list">ธรรมชาติ</a>
             </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">วัฒนธรรม</a>
+          <li class="nav-item <?php if($_GET['c']=='culture'){ echo "active";}?>">
+            <a class="nav-link" href="data.php?c=culture&p=list">วัฒนธรรม</a>
           </li>
 
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
       </div>
     </nav>
 
     <main role="main" class="container">
+      <?php
+        if ($_GET['p'] == 'list') {
+         while ($obj=mysqli_fetch_array($query,MYSQLI_ASSOC)) {
+      ?>
+      <div class="list-group">
+        <a href="data.php?c=<?php echo $_GET['c'];?>&p=data&id=<?php echo $obj['data_id'];?>" class="list-group-item list-group-item-action"><?php echo $obj['data_name'];?></a>
+      </div>
+      <?php
+      }}elseif ($_GET['p'] == 'data') {
+        $sqlsel = "SELECT * FROM data WHERE data_id = '".$_GET['id']."' ";
+        $querysel = mysqli_query($conn,$sqlsel);
+        while ($objsel=mysqli_fetch_array($querysel,MYSQLI_ASSOC)) {
+      ?>
+      <p class="h1 text-center"><?php echo $objsel['data_name'];?></p>
+      <div class="text-center">
+        <img src="images/<?php echo $objsel['data_pic'];?>" class="rounded" width="800px" >
+      </div>
+      <p><?php echo $objsel['data_detail'];?></p>
 
-      <h1><?php echo $result['data_name']?></h1>
-      <h3><?php echo $result['data_detail']?></h3>
-      <img src="images/<?php echo $result['data_pic']?>" />
-
+      <?php
+    }}
+      ?>
     </main><!-- /.container -->
 
     <!-- Bootstrap core JavaScript

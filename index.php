@@ -1,3 +1,10 @@
+<?php
+require('include/config.inc.php');
+$conn = mysqli_connect($server,$username,$password,$dbname);
+$sql = "SELECT * FROM slide ORDER BY slide_id ASC";
+$query = mysqli_query($conn,$sql);
+
+?>
 <!doctype html>
 <html lang="en">
   <head>
@@ -7,7 +14,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../../../favicon.ico">
 
-    <title>Starter Template for Bootstrap</title>
+    <title>แนะนำการท่องเที่ยวฤ</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -31,20 +38,16 @@
             <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="data.php?category=dhamm&list=dhamm">ธรรมมะ</a>
+            <a class="nav-link" href="data.php?c=dhamm&p=list">ธรรมมะ</a>
             </li>
           <li class="nav-item">
-            <a class="nav-link" href="data.php?category=natrue">ธรรมชาติ</a>
+            <a class="nav-link" href="data.php?c=nature&p=list">ธรรมชาติ</a>
             </li>
           <li class="nav-item">
-            <a class="nav-link" href="data.php?category=cultrue">วัฒนธรรม</a>
+            <a class="nav-link" href="data.php?c=culture&p=list">วัฒนธรรม</a>
           </li>
 
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
       </div>
     </nav>
 
@@ -52,15 +55,15 @@
 
       <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
-      <div class="carousel-item active">
-        <img class="d-block w-100" src=".../800x400?auto=yes&bg=777&fg=555&text=First slide" alt="First slide">
+      <?php
+      while ($obj=mysqli_fetch_array($query,MYSQLI_ASSOC)){
+      ?>
+      <div class="carousel-item <?php if($obj['slide_active']=='active'){ echo "active";}?>">
+        <img class="d-block w-100" src="slide/<?php echo $obj['slide_pic']?>" alt="<?php echo $obj['slide_pic']?>">
       </div>
-      <div class="carousel-item">
-        <img class="d-block w-100" src=".../800x400?auto=yes&bg=666&fg=444&text=Second slide" alt="Second slide">
-      </div>
-      <div class="carousel-item">
-        <img class="d-block w-100" src=".../800x400?auto=yes&bg=555&fg=333&text=Third slide" alt="Third slide">
-      </div>
+      <?php
+      }
+      ?>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
